@@ -9,6 +9,8 @@ import praktikum.Burger;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
 
+import java.util.ArrayList;
+
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
     @Mock
@@ -27,6 +29,52 @@ public class BurgerTest {
     private final String SECOND_INGREDIENT_NAME = "second ingredient name";
     private final String THIRD_INGREDIENT_NAME = "thrid ingredient name";
     private final String BUN_NAME = "bun name";
+
+    @Test
+    public void setBun(){
+        Burger burger = new Burger();
+        burger.setBuns(bun);
+        Assert.assertEquals(bun,burger.bun);
+    }
+
+    @Test
+    public void addIngredient() {
+        Burger burger = new Burger();
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
+        burger.addIngredient(thirdIngredient);
+        Assert.assertEquals(new ArrayList<Ingredient>() {{
+            add(firstIngredient);
+            add(secondIngredient);
+            add(thirdIngredient);
+        }}, burger.ingredients);
+    }
+    @Test
+    public void removeIngredient(){
+        Burger burger = new Burger();
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
+        burger.addIngredient(thirdIngredient);
+        burger.removeIngredient(2);
+        Assert.assertEquals(new ArrayList<Ingredient>(){{
+            add(firstIngredient);
+            add(secondIngredient);
+        }},burger.ingredients);
+    }
+    @Test
+    public void moveIngredient(){
+        Burger burger = new Burger();
+        burger.addIngredient(firstIngredient);
+        burger.addIngredient(secondIngredient);
+        burger.addIngredient(thirdIngredient);
+        burger.moveIngredient(2,0);
+        Assert.assertEquals(new ArrayList<Ingredient>(){{
+            add(thirdIngredient);
+            add(firstIngredient);
+            add(secondIngredient);
+        }},burger.ingredients);
+    }
+
 
     @Test
     public void getPrice() {
